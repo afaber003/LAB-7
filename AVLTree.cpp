@@ -23,7 +23,6 @@ start:
             goto start;
         } else {  // if it reached the bottom of the tree
             curr->setRightChild(newnode);
-            newnode->setParent(curr);
             goto end;
         }
     }
@@ -34,7 +33,6 @@ start:
             goto start;
         } else {
             curr->setLeftChild(newnode);
-            newnode->setParent(curr);
             goto end;
         }
     }
@@ -100,6 +98,7 @@ void AVLTree::rotateLeft(Node* curr){
     if (curr == root){
         root = currchild;
     }
+    cout << "ere" << endl;
 }
 
 int AVLTree::balanceFactor(Node* curr){
