@@ -74,17 +74,28 @@ void AVLTree::inOrder(Node* start) {
     inOrder(start->getLeftChild());
     cout << start->getData() << '(' << balanceFactor(start) << ')' << ", ";
     inOrder(start->getRightChild());
+    
 }
 
 void AVLTree::printBalanceFactors(){
-    return inOrder(root);
+    inOrder(root);
+    cout << endl;
 }
 
 void AVLTree::rotateRight(Node* curr){
     Node* currchild = curr->getLeftChild();
+    Node* currchildright = currchild->getRightChild();
     Node* currparent = curr->getParent();
+    curr->setLeftChild(currchildright);
     currchild->setRightChild(curr);
     currchild->setParent(currparent);
+    if (curr != root){
+        if (currparent->getLeftChild() == curr){
+            currparent->setLeftChild(currchild);
+        } else {
+            currparent->setRightChild(currchild);
+        }
+    }
     if (curr == root){
         root = currchild;
     }
@@ -93,12 +104,20 @@ void AVLTree::rotateRight(Node* curr){
 void AVLTree::rotateLeft(Node* curr){
     Node* currchild = curr->getRightChild();
     Node* currparent = curr->getParent();
+    Node* currchildleft = currchild->getLeftChild();
+    curr->setRightChild(currchildleft);   
     currchild->setLeftChild(curr);
     currchild->setParent(currparent);
+    if (curr != root){
+        if (currparent->getLeftChild() == curr){
+            currparent->setLeftChild(currchild);
+        } else {
+            currparent->setRightChild(currchild);
+        }
+    }
     if (curr == root){
         root = currchild;
     }
-    cout << "ere" << endl;
 }
 
 int AVLTree::balanceFactor(Node* curr){
